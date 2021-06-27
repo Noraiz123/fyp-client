@@ -12,7 +12,7 @@ function HomeProducts() {
         <TrendingUpIcon className='h-7 w-7 mr-3 text-red-500' />
         Top Selling
       </h4>
-      <div className='grid grid-cols-1 gap-4 lg:grid-col-3 md:grid-cols-3 xl:grid-cols-4'>
+      <div className='grid grid-cols-1 gap-4 lg:grid-cols-3 md:grid-cols-3 xl:grid-cols-4'>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((e) => (
           <div className='bg-white pb-4 h-auto shadow-md'>
             <img
