@@ -2,10 +2,17 @@ import Nav from '../Home/Nav';
 import Products from './Products';
 import Filters from './Filters';
 import { SearchIcon } from '@heroicons/react/outline';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { GetProducts } from '../../redux/actions/productsActions';
+import { useSelector, useDispatch } from 'react-redux';
 
 function ShopPage() {
   const [perPage, setPerPage] = useState(4);
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.productsReducer.products);
+  useEffect(() => {
+    dispatch(GetProducts());
+  }, []);
   return (
     <>
       <Nav />
@@ -21,10 +28,8 @@ function ShopPage() {
           />
         </div>
       </div>
-      <div className={`grid grid-cols-1 gap-4 lg:grid-cols-3 md:grid-cols-2 xl:grid-cols-${perPage} p-10`}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => (
-          <Products perPage={perPage} />
-        ))}
+      <div className={`grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2 xl:grid-cols-${perPage} p-10`}>
+        {products && products.map((data) => <Products perPage={perPage} data={data} />)}
       </div>
     </>
   );
