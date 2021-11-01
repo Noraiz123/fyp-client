@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const getProducts = async () => {
   try {
-    const result = await axios.get('https://fakestoreapi.com/products/');
+    const result = await axios.get('http://localhost:1337/products');
     if (result.status == 200) {
       return result.data;
     }

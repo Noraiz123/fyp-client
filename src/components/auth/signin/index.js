@@ -36,9 +36,11 @@ function Signin() {
     console.log(loginData);
   };
 
+  const name = 'abc'
+
   return (
-    <div className='w-full h-screen bg-gray-200 grid justify-items-center'>
-      <div className='xl:w-6/12 md:w-9/12 w-full xl:h-auto h-full bg-white shadow-lg  mx-auto my-auto'>
+    <div className='w-full h-screen bg-gradient-to-r from-indigo-400 via-indigo-400 to-indigo-500 grid justify-items-center'>
+      <div className='xl:w-6/12 md:w-9/12 w-full xl:h-auto h-full bg-white shadow-lg rounded-lg  mx-auto my-auto'>
         <h1 className='text-center mt-10 text-3xl'>Login</h1>
         <div className='p-10'>
           <div className='flex flex-col lg:w-7/12 md:w-full w-full mx-auto  gap-5'>

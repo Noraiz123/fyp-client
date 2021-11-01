@@ -8,11 +8,16 @@ import { useSelector, useDispatch } from 'react-redux';
 
 function ShopPage() {
   const [perPage, setPerPage] = useState(4);
+  const [search, setSearch] = useState('');
   const dispatch = useDispatch();
   const products = useSelector((state) => state.productsReducer.products);
   useEffect(() => {
     dispatch(GetProducts());
   }, []);
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
   return (
     <>
       <Nav />
@@ -25,11 +30,15 @@ function ShopPage() {
             type='search'
             className='bg-transparent w-full outline-none border-none w-full'
             placeholder='Search....'
+            onChange={handleSearch}
           />
         </div>
       </div>
       <div className={`grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2 xl:grid-cols-${perPage} p-10`}>
-        {products && products.map((data) => <Products perPage={perPage} data={data} />)}
+        {products &&
+          products
+            .filter((e) => e.title.toLowerCase().includes(search.toLowerCase()))
+            .map((data) => <Products perPage={perPage} data={data} />)}
       </div>
     </>
   );

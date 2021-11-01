@@ -9,7 +9,7 @@ function Products({ data }) {
   return (
     <>
       <div className='flex flex-col shadow-md'>
-        <img loading="lazy" src={data.image} alt='' className='w-full h-44 object-contain' />
+        <img loading="lazy" src={'http://localhost:1337' + data.image.url} alt='' className='w-full h-44 object-contain' />
         <form className='flex-auto p-6'>
           <div className='flex flex-wrap items-baseline'>
             <h1 className='w-full flex-none font-semibold mb-2.5'>{data.title}</h1>

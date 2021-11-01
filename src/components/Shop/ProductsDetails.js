@@ -4,11 +4,16 @@ import { useRouter } from 'next/router';
 import { StarIcon, InformationCircleIcon } from '@heroicons/react/solid';
 import { HomeIcon, CashIcon, ExclamationIcon, PhotographIcon, PlusCircleIcon } from '@heroicons/react/outline';
 import { Button, IconButton } from '@material-ui/core';
-import { ShoppingCart } from '@material-ui/icons';
+import { ShoppingCart, Facebook, Twitter, WhatsApp } from '@material-ui/icons';
 import ReactStars from 'react-rating-stars-component';
+import { useState } from 'react';
+import ProductDescription from './ProductDescription';
+import ProductSpecifications from './ProductSpecifications';
+import ProductReviews from './ProductReviews';
 
 function ProductsDetails() {
   const router = useRouter();
+  const [options, SetOptions] = useState('description');
   const { productId } = router.query;
   const product = useSelector((state) => state.productsReducer.products.find((e) => e.id == productId));
   const style = {
@@ -19,17 +24,30 @@ function ProductsDetails() {
   const ratingChanged = (newRating) => {
     console.log(newRating);
   };
+
+  const iconStyle = {
+    outline: 'none',
+  };
+
+  const handleOptions = (value) => {
+    SetOptions(value);
+  };
+
+  const activeStyling = () => {
+    return 'bg-red-500 rounded-full text-white';
+  };
+
   return (
     <div className='w-full h-screen'>
       <Nav />
       {product && (
         <>
-          <div className='grid grid-cols-1 md:grid-cols-4 p-10 space-x-2'>
-            <div className='p-10 shadow-md space-y-14 flex flex-col justify-center items-center md:col-span-3'>
+          <div className='px-32 my-10 space-x-2'>
+            <div className='p-10 shadow-md space-y-14 flex justify-center items-center md:col-span-3'>
               <div className='w-3/12'>
                 <img loading='lazy' className='' src={product.image} />
               </div>
-              <div className='space-y-4'>
+              <div className='space-y-4 space-x-10'>
                 <div className='flex flex-col items-center space-y-4'>
                   <h5 className='font-extrabold text-xl'>{product.title}</h5>
                   <span className='flex'>
@@ -73,9 +91,21 @@ function ProductsDetails() {
                     </Button>
                   </div>
                 </div>
+                <div className='flex w-10 items-center'>
+                  <p className='mr-4 font-medium'>Share:</p>
+                  <IconButton style={iconStyle}>
+                    <Facebook />
+                  </IconButton>
+                  <IconButton style={iconStyle}>
+                    <Twitter />
+                  </IconButton>
+                  <IconButton style={iconStyle}>
+                    <WhatsApp />
+                  </IconButton>
+                </div>
               </div>
             </div>
-            <div className='bg-gray-100 shadow-md p-4 space-y-10'>
+            {/* <div className='bg-gray-100 shadow-md p-4 space-y-10'>
               <div className='flex justify-between items-center text-gray-500'>
                 <p>Delivery Options</p>
                 <div className='p-2 cursor-pointer rounded-full hover:bg-gray-200'>
@@ -120,9 +150,44 @@ function ProductsDetails() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
-          <div className='p-10 w-full'>
+          <div className='flex justify-center  text-gray-400'>
+            <p
+              onClick={() => handleOptions('description')}
+              className={`border-gray-200 border-r-2 ${
+                options === 'description' && activeStyling()
+              } px-4 py-2 hover:bg-red-500 hover:rounded-full cursor-pointer hover:text-white`}
+            >
+              Description
+            </p>
+            <p
+              onClick={() => handleOptions('specification')}
+              className={`border-gray-200 border-r-2 px-4 py-2 ${
+                options === 'specification' && activeStyling()
+              } hover:bg-red-500 hover:rounded-full cursor-pointer hover:text-white`}
+            >
+              Specification
+            </p>
+            <p
+              onClick={() => handleOptions('reviews')}
+              className={`px-4 border-gray-200 border-r-2 py-2 ${
+                options === 'reviews' && activeStyling()
+              } hover:bg-red-500 hover:rounded-full cursor-pointer hover:text-white`}
+            >
+              Reviews
+            </p>
+          </div>
+          <div>
+            {options === 'description' ? (
+              <ProductDescription data={product} />
+            ) : options === 'specification' ? (
+              <ProductSpecifications />
+            ) : (
+              <ProductReviews />
+            )}
+          </div>
+          {/* <div className='p-10 w-full'>
             <p className='text-center text-2xl'>Product Reviews</p>
             <div className='flex bg-gray-200 px-2 my-5 w-full shadow-inner md:w-3/6 items-center rounded-full mx-auto'>
               <input
@@ -143,7 +208,7 @@ function ProductsDetails() {
               <p>Add Product Rating</p>
               <ReactStars count={5} onChange={ratingChanged} size={24} activeColor='#ffd700' />
             </div>
-          </div>
+          </div> */}
         </>
       )}
     </div>
